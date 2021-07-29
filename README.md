@@ -58,3 +58,34 @@ Spring boot project bacic CURD operation.
 
 # [Gradle](https://gradle.org)
 > Gradle is a build automation tool for multi-language software development. It controls the development process in the tasks of compilation and packaging to testing, deployment, and publishing. Supported languages include Java, C/C++, and JavaScript.
+
+
+
+
+##Request and Response<br>
+
+BaseURL : http://localhost:8099
+
+Request: http://localhost:8099/api/v1/create<br>
+Body: row with json<br>
+> {
+    "name":"Dinesh Kumar",
+    "gender":"Male",
+    "dob":"25/01/1997",
+    "country":"Nepal"
+}
+
+
+Response:<br>
+> {
+    "status": "OK",
+    "message": "Request Successfully",
+    "data": {
+        "id": 10,
+        "name": "Dinesh Kumar",
+        "gender": "Male",
+        "dob": "25/01/1997",
+        "country": "Nepal"
+    }
+}
+

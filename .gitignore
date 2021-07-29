@@ -1,0 +1,7 @@
+
+*.bin
+*.lock
+.gradle/*
+.idea/*
+build/*
+.DS_Store

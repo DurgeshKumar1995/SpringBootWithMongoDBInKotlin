@@ -21,9 +21,9 @@
    spring.data.mongodb.database=students<br>
    server.port=8099<br>
 
-><!--> # Avoid White level error-->
-server.error.whitelabel.enabled=false <br>
-><!--#logging.level.ROOT=DEBUG--><br>
+> <!--> # Avoid White level error-->
+> server.error.whitelabel.enabled=false <br>
+>  <!--#logging.level.ROOT=DEBUG--><br>
 
 
 

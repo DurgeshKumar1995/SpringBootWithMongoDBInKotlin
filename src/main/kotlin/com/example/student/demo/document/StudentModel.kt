@@ -10,3 +10,7 @@ data class StudentModel(@Id var id :Long, val name:String, val gender:String, va
 //    constructor(name: String,gender: String,dob: String,country: String):this(0,name, gender, dob, country)
 }
 const val SEQUENCE_NAME = "students_sequence"
+const val Name  = "name"
+const val Gender  = "gender"
+const val DOB  = "dob"
+const val Country  = "country"

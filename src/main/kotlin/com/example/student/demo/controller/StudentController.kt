@@ -1,5 +1,6 @@
 package com.example.student.demo.controller
 
+import com.example.student.demo.base.BasePaginationModel
 import com.example.student.demo.base.BaseResponse
 import com.example.student.demo.constant.ConstantString
 import com.example.student.demo.document.SEQUENCE_NAME
@@ -26,16 +27,20 @@ class StudentController {
     @Autowired
     lateinit var seqGeneratorService: SequenceGeneratorService
 
+
     @GetMapping("/read")
     fun read(): BaseResponse<List<StudentModel>> {
 //        return studentDAO.findAll()
         val model = BaseResponse<List<StudentModel>>()
+
         return try {
             val students = studentDAO.findAll()
             model.data = students
 
+
             if (students.isEmpty()) {
                 model.run {
+
                     message = ConstantString.NO_DATA
                     status = HttpStatus.NO_CONTENT
                 }
@@ -106,6 +111,39 @@ class StudentController {
         }
     }
 
+    @PostMapping("/readByPage")
+    fun readStudentsByPage(
+            @RequestParam("country", required = false) country: String? = null,
+            @RequestParam("pageNo", defaultValue = "1") page: Int = 1,
+            @RequestParam("itemCount", defaultValue = "3") size: Int = 3
+    ): BaseResponse<BasePaginationModel<StudentModel>> {
+
+        val model = BaseResponse<BasePaginationModel<StudentModel>>()
+        return try {
+            if (page<1)
+                return model
+            val students = studentService.getStudentListPageWise(country, page, size)
+            model.data = students
+
+            if (students.data.isNotEmpty()) {
+                model.run {
+                    message = ConstantString.REQUEST_SUCCESS
+                    status = HttpStatus.OK
+                }
+                model
+            } else {
+                model.run {
+                    message = ConstantString.NO_DATA
+                    status = HttpStatus.NO_CONTENT
+                }
+                model
+            }
+        } catch (e: Exception) {
+            Logger.debug(e)
+            model
+        }
+    }
+
 
     @PostMapping("/create")
     fun create(@RequestBody newEmployeeObject: StudentModel): BaseResponse<StudentModel> {
@@ -147,12 +185,12 @@ class StudentController {
     @PutMapping("/update")
     fun update(@RequestBody modifiedEmployeeObject: StudentModel): BaseResponse<StudentModel> {
         val model = BaseResponse<StudentModel>()
-        model.message =try {
-            if(studentDAO.existsById(modifiedEmployeeObject.id)) {
+        model.message = try {
+            if (studentDAO.existsById(modifiedEmployeeObject.id)) {
                 model.status = HttpStatus.OK
                 model.data = studentDAO.save(modifiedEmployeeObject)
                 ConstantString.REQUEST_SUCCESS
-            }else{
+            } else {
                 model.status = HttpStatus.NOT_ACCEPTABLE
                 "Request not acceptable"
             }

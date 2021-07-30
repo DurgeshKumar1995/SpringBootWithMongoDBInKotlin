@@ -25,6 +25,10 @@ dependencies {
 //	providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")//Javax servlet.HHTp deffer issue
 	implementation("org.springframework.boot:spring-boot-starter-tomcat")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
+
+	//For Security
+//	implementation("org.springframework.boot:spring-boot-starter-security")
+//	implementation ("org.springframework.security:spring-security-test")
 }
 
 tasks.withType<KotlinCompile> {
